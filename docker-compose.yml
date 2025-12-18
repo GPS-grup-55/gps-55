@@ -1,0 +1,18 @@
+services:
+  gps-55:
+    container_name: gps-55
+    image: gps-55-ci
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - .:/app
+    command:
+      - bash
+      - -c
+      - |
+        pylint main.py transform.py && \
+        coverage run --source=. -m unittest test.py && \
+        coverage report --fail-under=100 && \
+        coverage html -d coverage_html
