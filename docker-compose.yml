@@ -14,5 +14,5 @@ services:
       - |
         pylint main.py transform.py && \
         coverage run --source=. -m unittest test.py && \
-        coverage report --fail-under=100 && \
-        coverage html -d coverage_html
+        coverage html -d coverage_html && \
+        coverage report --fail-under=100
