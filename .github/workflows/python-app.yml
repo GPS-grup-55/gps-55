@@ -1,0 +1,28 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build container via docker compose
+        run: docker compose build
+
+      - name: Run lint and tests via docker compose
+        run: docker compose run --rm gps-55
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html-report
+          path: coverage_html
+          if-no-files-found: ignore
